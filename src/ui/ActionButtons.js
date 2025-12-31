@@ -1,14 +1,23 @@
 /**
- * ActionButtons - Controls for delete, reset, etc.
- * Step 5: App actions
+ * ActionButtons - Controls for delete, reset, save, load
+ * Step 5 & 7: App actions + persistence
  */
 
 import { AppState } from '../state/AppState.js';
 
 export class ActionButtons {
-  constructor(scene) {
+  constructor(scene, storageManager = null) {
     this.scene = scene;
+    this.storageManager = storageManager;
     this._init();
+  }
+
+  /**
+   * Set storage manager (can be set after construction)
+   */
+  setStorageManager(storageManager) {
+    this.storageManager = storageManager;
+    this._updateLoadButton();
   }
 
   _init() {
@@ -24,7 +33,101 @@ export class ActionButtons {
       resetBtn.addEventListener('click', () => this._resetLayout());
     }
 
+    // Save button
+    const saveBtn = document.getElementById('save-btn');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', () => this._saveLayout());
+    }
+
+    // Load button
+    const loadBtn = document.getElementById('load-btn');
+    if (loadBtn) {
+      loadBtn.addEventListener('click', () => this._loadLayout());
+    }
+
+    // Update load button state
+    this._updateLoadButton();
+
     console.log('✅ ActionButtons initialized');
+  }
+
+  /**
+   * Update load button based on saved data
+   */
+  _updateLoadButton() {
+    const loadBtn = document.getElementById('load-btn');
+    if (loadBtn && this.storageManager) {
+      const info = this.storageManager.getSavedLayoutInfo();
+      if (info) {
+        loadBtn.title = `Load saved layout (${info.objectCount} objects, ${info.date})`;
+        loadBtn.classList.add('has-data');
+      } else {
+        loadBtn.title = 'No saved layout';
+        loadBtn.classList.remove('has-data');
+      }
+    }
+  }
+
+  /**
+   * Save layout to localStorage
+   */
+  _saveLayout() {
+    if (!this.storageManager) {
+      console.warn('StorageManager not available');
+      return;
+    }
+
+    const success = this.storageManager.saveLayout();
+    if (success) {
+      this._showNotification('💾 Layout saved!');
+      this._updateLoadButton();
+    } else {
+      this._showNotification('⚠️ Nothing to save');
+    }
+  }
+
+  /**
+   * Load layout from localStorage
+   */
+  async _loadLayout() {
+    if (!this.storageManager) {
+      console.warn('StorageManager not available');
+      return;
+    }
+
+    if (!this.storageManager.hasSavedLayout()) {
+      this._showNotification('ℹ️ No saved layout found');
+      return;
+    }
+
+    this._showNotification('📂 Loading layout...');
+    
+    const success = await this.storageManager.loadLayout();
+    if (success) {
+      this._showNotification('✅ Layout loaded!');
+    } else {
+      this._showNotification('❌ Failed to load layout');
+    }
+  }
+
+  /**
+   * Show temporary notification
+   */
+  _showNotification(message) {
+    // Remove existing notification
+    const existing = document.querySelector('.action-notification');
+    if (existing) existing.remove();
+
+    const notification = document.createElement('div');
+    notification.className = 'action-notification';
+    notification.textContent = message;
+    document.body.appendChild(notification);
+
+    // Auto-remove after 2 seconds
+    setTimeout(() => {
+      notification.classList.add('fade-out');
+      setTimeout(() => notification.remove(), 300);
+    }, 2000);
   }
 
   /**
@@ -33,7 +136,7 @@ export class ActionButtons {
   _deleteSelected() {
     const selected = AppState.get('selectedObject');
     if (!selected) {
-      console.log('⚠️ No object selected to delete');
+      this._showNotification('⚠️ No object selected');
       return;
     }
 

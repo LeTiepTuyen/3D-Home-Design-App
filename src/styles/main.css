@@ -232,6 +232,79 @@ html, body {
   background-color: rgb(180, 140, 60);
 }
 
+.btn-divider {
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin: 0 4px;
+}
+
+.action-btn.save-load {
+  background-color: rgb(60, 90, 130);
+}
+
+#save-btn:hover {
+  background-color: rgb(60, 130, 90);
+}
+
+#load-btn:hover {
+  background-color: rgb(90, 60, 130);
+}
+
+#load-btn.has-data {
+  position: relative;
+}
+
+#load-btn.has-data::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  background-color: #4CAF50;
+  border-radius: 50%;
+}
+
+/* Notification Toast */
+.action-notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(42, 53, 87, 0.95);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  animation: slideDown 0.3s ease;
+}
+
+.action-notification.fade-out {
+  animation: fadeOut 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 /* ============================================
    Properties Panel (Step 6)
    ============================================ */

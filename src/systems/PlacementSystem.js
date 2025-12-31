@@ -14,6 +14,9 @@ export class PlacementSystem {
     this.camera = camera;
     this.domElement = domElement;
     
+    // Expose furniture loader for external use (Step 7: StorageManager)
+    this.furnitureLoader = furnitureLoader;
+    
     // Raycaster for floor detection
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();

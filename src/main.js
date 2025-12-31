@@ -26,13 +26,14 @@ import { SelectionSystem } from './systems/SelectionSystem.js';
 
 // State
 import { AppState } from './state/AppState.js';
+import { StorageManager } from './state/StorageManager.js';
 
 // ============================================
 // Application State
 // ============================================
 let sceneManager, lighting, controls, room;
 let paletteUI, menuPanel, statusBar, actionButtons, propertiesPanel;
-let placementSystem, selectionSystem;
+let placementSystem, selectionSystem, storageManager;
 
 // ============================================
 // Initialize Application
@@ -80,15 +81,25 @@ async function init() {
   // Initialize action buttons (Step 5)
   actionButtons = new ActionButtons(sceneManager.scene);
 
+  // Initialize storage manager (Step 7)
+  storageManager = new StorageManager(
+    sceneManager.scene,
+    placementSystem.furnitureLoader // Pass furniture loader for loading
+  );
+  
+  // Connect storage manager to action buttons
+  actionButtons.setStorageManager(storageManager);
+
   console.log('✅ Scene Manager initialized');
   console.log('✅ Lighting setup complete');
   console.log('✅ OrbitControls enabled');
   console.log('✅ Room created:', ROOM_CONFIG);
   console.log('✅ PlacementSystem ready - double-click to place furniture');
   console.log('✅ SelectionSystem ready - click to select, drag to move');
-  console.log('✅ ActionButtons ready - Delete/Reset controls');
+  console.log('✅ ActionButtons ready - Delete/Reset/Save/Load controls');
   console.log('✅ PropertiesPanel ready - color/material controls');
-  console.log('🎉 Step 6 - Material/Color Change READY');
+  console.log('✅ StorageManager ready - localStorage persistence');
+  console.log('🎉 Step 7 - Save/Load READY');
 }
 
 // ============================================

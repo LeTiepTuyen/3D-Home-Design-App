@@ -8,10 +8,11 @@ import { AppState } from '../state/AppState.js';
 import { ROOM_CONFIG } from '../core/Room.js';
 
 export class SelectionSystem {
-  constructor(scene, camera, domElement) {
+  constructor(scene, camera, domElement, controlsManager = null) {
     this.scene = scene;
     this.camera = camera;
     this.domElement = domElement;
+    this.controlsManager = controlsManager; // Reference to OrbitControls manager
     
     // Raycaster for selection
     this.raycaster = new THREE.Raycaster();
@@ -242,10 +243,15 @@ export class SelectionSystem {
     this.dragOffset.copy(intersectPoint).sub(this.selectedObject.position);
     this.dragOffset.y = 0; // Keep on floor plane
     
+    // Disable OrbitControls during drag to prevent camera movement
+    if (this.controlsManager) {
+      this.controlsManager.setEnabled(false);
+    }
+    
     // Change cursor
     this.domElement.style.cursor = 'grabbing';
     
-    console.log('🖐️ Start drag');
+    console.log('🖐️ Start drag (camera controls disabled)');
   }
 
   /**
@@ -254,6 +260,11 @@ export class SelectionSystem {
   _endDrag() {
     this.isDragging = false;
     this.domElement.style.cursor = 'auto';
+    
+    // Re-enable OrbitControls after drag
+    if (this.controlsManager) {
+      this.controlsManager.setEnabled(true);
+    }
     
     if (this.selectedObject) {
       console.log('📍 Moved to:', 

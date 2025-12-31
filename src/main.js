@@ -72,7 +72,8 @@ async function init() {
   selectionSystem = new SelectionSystem(
     sceneManager.scene,
     sceneManager.camera,
-    sceneManager.renderer.domElement
+    sceneManager.renderer.domElement,
+    controls // Pass controls to disable during drag
   );
 
   // Initialize action buttons (Step 5)

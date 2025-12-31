@@ -167,15 +167,23 @@ function addGridHelper() {
 function animate() {
   requestAnimationFrame(animate);
   
-  // Update controls
-  controls.update();
+  // Update controls (check if initialized)
+  if (controls) {
+    controls.update();
+  }
   
   // Render scene
-  sceneManager.render();
+  if (sceneManager) {
+    sceneManager.render();
+  }
 }
 
 // ============================================
 // Start Application
 // ============================================
-init();
+init().then(() => {
+  console.log('🚀 Application started successfully!');
+}).catch((error) => {
+  console.error('❌ Failed to initialize:', error);
+});
 animate();

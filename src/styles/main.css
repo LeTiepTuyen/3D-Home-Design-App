@@ -265,6 +265,15 @@ html, body {
   border-radius: 50%;
 }
 
+/* Clear Storage Button */
+.action-btn.clear-storage {
+  background-color: rgb(130, 60, 60);
+}
+
+#clear-btn:hover {
+  background-color: rgb(180, 60, 60);
+}
+
 /* Notification Toast */
 .action-notification {
   position: fixed;

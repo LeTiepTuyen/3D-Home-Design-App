@@ -45,6 +45,12 @@ export class ActionButtons {
       loadBtn.addEventListener('click', () => this._loadLayout());
     }
 
+    // Clear button
+    const clearBtn = document.getElementById('clear-btn');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => this._clearStorage());
+    }
+
     // Update load button state
     this._updateLoadButton();
 
@@ -128,6 +134,27 @@ export class ActionButtons {
       notification.classList.add('fade-out');
       setTimeout(() => notification.remove(), 300);
     }, 2000);
+  }
+
+  /**
+   * Clear saved storage
+   */
+  _clearStorage() {
+    if (!this.storageManager) {
+      console.warn('StorageManager not available');
+      return;
+    }
+
+    if (!this.storageManager.hasSavedLayout()) {
+      this._showNotification('ℹ️ No saved data to clear');
+      return;
+    }
+
+    // Clear saved layout
+    this.storageManager.clearSavedLayout();
+    this._showNotification('🧹 Saved storage cleared!');
+    this._updateLoadButton();
+    console.log('🧹 Storage cleared');
   }
 
   /**

@@ -17,9 +17,11 @@ import { Room, ROOM_CONFIG } from './core/Room.js';
 import { PaletteUI } from './ui/PaletteUI.js';
 import { MenuPanel } from './ui/MenuPanel.js';
 import { StatusBar } from './ui/StatusBar.js';
+import { ActionButtons } from './ui/ActionButtons.js';
 
 // Systems
 import { PlacementSystem } from './systems/PlacementSystem.js';
+import { SelectionSystem } from './systems/SelectionSystem.js';
 
 // State
 import { AppState } from './state/AppState.js';
@@ -28,8 +30,8 @@ import { AppState } from './state/AppState.js';
 // Application State
 // ============================================
 let sceneManager, lighting, controls, room;
-let paletteUI, menuPanel, statusBar;
-let placementSystem;
+let paletteUI, menuPanel, statusBar, actionButtons;
+let placementSystem, selectionSystem;
 
 // ============================================
 // Initialize Application
@@ -66,12 +68,24 @@ async function init() {
     sceneManager.renderer.domElement
   );
 
+  // Initialize selection system (Step 5)
+  selectionSystem = new SelectionSystem(
+    sceneManager.scene,
+    sceneManager.camera,
+    sceneManager.renderer.domElement
+  );
+
+  // Initialize action buttons (Step 5)
+  actionButtons = new ActionButtons(sceneManager.scene);
+
   console.log('✅ Scene Manager initialized');
   console.log('✅ Lighting setup complete');
   console.log('✅ OrbitControls enabled');
   console.log('✅ Room created:', ROOM_CONFIG);
   console.log('✅ PlacementSystem ready - double-click to place furniture');
-  console.log('🎉 Step 4 - Furniture Placement READY');
+  console.log('✅ SelectionSystem ready - click to select, drag to move');
+  console.log('✅ ActionButtons ready - Delete/Reset controls');
+  console.log('🎉 Step 5 - Selection + Movement READY');
 }
 
 // ============================================

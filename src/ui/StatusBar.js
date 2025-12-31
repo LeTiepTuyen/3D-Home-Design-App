@@ -30,6 +30,15 @@ export class StatusBar {
     const activeFurniture = AppState.get('activeFurnitureType');
     const placedObjects = AppState.get('placedObjects') || [];
 
+    let hint = '';
+    if (selectedObject) {
+      hint = 'Drag to move | R: Rotate | Del: Delete';
+    } else if (activeFurniture) {
+      hint = 'Double-click floor to place';
+    } else {
+      hint = 'Select category → item';
+    }
+
     this.container.innerHTML = `
       <div class="status-item">
         <span class="status-label">Selected:</span>
@@ -43,6 +52,7 @@ export class StatusBar {
         <span class="status-label">Objects:</span>
         <span class="status-value">${placedObjects.length}</span>
       </div>
+      <div class="status-hint">${hint}</div>
     `;
   }
 }

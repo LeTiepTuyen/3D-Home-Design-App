@@ -195,26 +195,41 @@ html, body {
   position: fixed;
   left: 20px;
   bottom: 20px;
-  background-color: rgb(59, 59, 59);
+  background-color: rgb(42, 53, 87);
   display: flex;
-  gap: 5px;
-  padding: 8px;
+  gap: 8px;
+  padding: 10px;
   border-radius: 8px;
   z-index: 100;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-#buttons-container .btn {
-  width: 40px;
-  height: 40px;
+.action-btn {
+  padding: 10px 16px;
+  background-color: rgb(74, 88, 129);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
   cursor: pointer;
-  opacity: 0.8;
-  transition: all 0.2s;
-  filter: invert(1);
+  transition: all 0.2s ease;
 }
 
-#buttons-container .btn:hover {
-  opacity: 1;
-  transform: scale(1.1);
+.action-btn:hover {
+  background-color: rgb(94, 108, 149);
+  transform: translateY(-2px);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
+#delete-btn:hover {
+  background-color: rgb(180, 60, 60);
+}
+
+#reset-btn:hover {
+  background-color: rgb(180, 140, 60);
 }
 
 /* ============================================
@@ -250,6 +265,16 @@ html, body {
 #status-bar .status-value {
   font-weight: 500;
   color: #4CAF50;
+}
+
+#status-bar .status-hint {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-style: italic;
+  opacity: 0.8;
+  font-size: 11px;
+  color: #FFC107;
 }
 
 /* ============================================

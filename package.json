@@ -1,0 +1,19 @@
+{
+  "name": "3d-home-design-app",
+  "version": "1.0.0",
+  "description": "3D Home Design Application - Challenge 2 (Three.js)",
+  "author": "Le Tiep Tuyen <22020015>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

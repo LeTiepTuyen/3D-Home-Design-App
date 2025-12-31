@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Home Design App</title>
+  <link rel="stylesheet" href="/src/styles/main.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Three.js Canvas -->
+    <canvas id="three-canvas"></canvas>
+
+    <!-- Left Palette Panel -->
+    <div class="palette-container">
+      <div id="category-palette"></div>
+    </div>
+
+    <!-- Furniture Menu Panel -->
+    <div id="menu-container">
+      <header id="menu-header">
+        <h2 id="menu-title">Category</h2>
+        <img id="menu-close-btn" src="/assets/ui/close-btn.svg" alt="Close">
+      </header>
+      <main id="menu-contents"></main>
+    </div>
+
+    <!-- Action Buttons -->
+    <div id="buttons-container">
+      <img src="/assets/ui/delete.svg" alt="Delete" class="btn" id="delete-btn" title="Delete Selected (Del)">
+    </div>
+
+    <!-- Status Bar -->
+    <div id="status-bar"></div>
+
+    <!-- Loading Indicator -->
+    <div id="loading-indicator">Loading...</div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

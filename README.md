@@ -24,6 +24,7 @@ A web-based **3D Home Design Application** built with **Three.js** that allows u
 
 📺 **Watch the demo video:** [Google Drive Link](https://drive.google.com/file/d/1bbB_XXbjymuFIBV3mxfU-kh80Q0XFrQK/view?usp=drive_link)
 
+📄 **Read the full report:** [REPORT.md](REPORT.md)
 
 ---
 

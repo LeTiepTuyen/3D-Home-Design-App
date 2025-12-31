@@ -125,11 +125,17 @@ export class StorageManager {
    * Serialize a 3D object to JSON-compatible format
    */
   _serializeObject(obj) {
+    // Get furniture data from different possible locations in userData
+    const furnitureData = obj.userData?.furnitureData || {};
+    
     return {
       name: obj.name,
-      furnitureType: obj.userData?.furnitureType || 'unknown',
-      furniturePath: obj.userData?.furniturePath || '',
-      furnitureId: obj.userData?.furnitureId || 0,
+      // Support both old format (furnitureType/Path) and new format (furnitureData)
+      furnitureType: obj.userData?.furnitureType || furnitureData.name || 'unknown',
+      furniturePath: obj.userData?.furniturePath || furnitureData.path || '',
+      furnitureId: obj.userData?.furnitureId || furnitureData.id || 0,
+      // Store complete furniture data for proper reload
+      furnitureData: furnitureData,
       position: {
         x: obj.position.x,
         y: obj.position.y,
@@ -183,25 +189,45 @@ export class StorageManager {
         return null;
       }
 
-      let furniture;
+      let furniture = null;
+      
+      // Get the model path from either direct path or furnitureData
+      const modelPath = objData.furniturePath || objData.furnitureData?.path;
+      
+      console.log(`📂 Loading saved furniture: ${objData.name}, path: ${modelPath}`);
 
       // Try to load the model
-      if (objData.furniturePath && this.furnitureLoader) {
-        furniture = await this.furnitureLoader.load(objData.furniturePath);
+      if (modelPath && this.furnitureLoader) {
+        try {
+          furniture = await this.furnitureLoader.load(modelPath);
+          console.log(`✅ Model loaded successfully: ${modelPath}`);
+        } catch (loadError) {
+          console.warn(`⚠️ Failed to load model ${modelPath}:`, loadError);
+          furniture = null;
+        }
       }
 
       // Fallback to primitive if model loading failed
       if (!furniture) {
+        console.log(`⚠️ Using fallback primitive for: ${objData.name}`);
         furniture = this._createFallbackPrimitive(objData.furnitureType);
       }
 
       // Apply saved properties
       furniture.name = objData.name;
+      
+      // Restore userData - preserve furnitureData for future saves
       furniture.userData = {
+        id: Date.now() + Math.random(),
         name: objData.name,
         furnitureType: objData.furnitureType,
-        furniturePath: objData.furniturePath,
+        furniturePath: modelPath,
         furnitureId: objData.furnitureId,
+        furnitureData: objData.furnitureData || {
+          name: objData.furnitureType,
+          path: modelPath,
+          id: objData.furnitureId
+        },
         isSelectable: true
       };
 
@@ -230,6 +256,8 @@ export class StorageManager {
       // Add to scene and state
       container.add(furniture);
       AppState.addPlacedObject(furniture);
+
+      console.log(`✅ Restored: ${objData.name} at (${objData.position.x.toFixed(2)}, ${objData.position.z.toFixed(2)})`);
 
       return furniture;
     } catch (error) {

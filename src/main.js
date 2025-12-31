@@ -18,6 +18,7 @@ import { PaletteUI } from './ui/PaletteUI.js';
 import { MenuPanel } from './ui/MenuPanel.js';
 import { StatusBar } from './ui/StatusBar.js';
 import { ActionButtons } from './ui/ActionButtons.js';
+import { PropertiesPanel } from './ui/PropertiesPanel.js';
 
 // Systems
 import { PlacementSystem } from './systems/PlacementSystem.js';
@@ -30,7 +31,7 @@ import { AppState } from './state/AppState.js';
 // Application State
 // ============================================
 let sceneManager, lighting, controls, room;
-let paletteUI, menuPanel, statusBar, actionButtons;
+let paletteUI, menuPanel, statusBar, actionButtons, propertiesPanel;
 let placementSystem, selectionSystem;
 
 // ============================================
@@ -86,7 +87,8 @@ async function init() {
   console.log('✅ PlacementSystem ready - double-click to place furniture');
   console.log('✅ SelectionSystem ready - click to select, drag to move');
   console.log('✅ ActionButtons ready - Delete/Reset controls');
-  console.log('🎉 Step 5 - Selection + Movement READY');
+  console.log('✅ PropertiesPanel ready - color/material controls');
+  console.log('🎉 Step 6 - Material/Color Change READY');
 }
 
 // ============================================
@@ -101,6 +103,9 @@ async function initUI() {
   
   // Create status bar
   statusBar = new StatusBar('status-bar');
+  
+  // Create properties panel (Step 6)
+  propertiesPanel = new PropertiesPanel('properties-panel');
   
   // Handle item selection from menu
   menuPanel.setOnItemSelect((item) => {

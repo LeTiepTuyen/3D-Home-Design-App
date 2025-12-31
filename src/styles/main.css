@@ -233,6 +233,202 @@ html, body {
 }
 
 /* ============================================
+   Properties Panel (Step 6)
+   ============================================ */
+#properties-panel {
+  position: fixed;
+  top: 50px;
+  right: 20px;
+  width: 250px;
+  background-color: rgb(42, 53, 87);
+  border-radius: 8px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#properties-panel.visible {
+  display: flex;
+}
+
+.props-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: rgb(52, 63, 97);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.props-header h3 {
+  margin: 0;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.props-close {
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  line-height: 1;
+}
+
+.props-close:hover {
+  opacity: 1;
+}
+
+.props-content {
+  padding: 15px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.props-section {
+  margin-bottom: 12px;
+}
+
+.props-label {
+  display: block;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 11px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.props-value {
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.props-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 15px 0;
+}
+
+/* Color Picker */
+.color-picker-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.color-picker {
+  width: 50px;
+  height: 35px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.color-picker::-webkit-color-swatch-wrapper {
+  padding: 2px;
+}
+
+.color-picker::-webkit-color-swatch {
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.color-value {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  font-family: monospace;
+}
+
+/* Preset Colors */
+.preset-colors {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.color-preset {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.color-preset:hover {
+  transform: scale(1.1);
+  border-color: white;
+}
+
+/* Select dropdown */
+.props-select {
+  width: 100%;
+  padding: 8px 10px;
+  background-color: rgb(74, 88, 129);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.props-select:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+/* Slider */
+.props-slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgb(74, 88, 129);
+  outline: none;
+  cursor: pointer;
+}
+
+.props-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+  border: 2px solid white;
+}
+
+/* Props buttons */
+.props-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.props-btn {
+  flex: 1;
+  padding: 8px 12px;
+  background-color: rgb(74, 88, 129);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.props-btn:hover {
+  background-color: rgb(94, 108, 149);
+}
+
+.props-btn.danger:hover {
+  background-color: rgb(88, 36, 172);
+}
+
+/* ============================================
    Status Bar
    ============================================ */
 #status-bar {
